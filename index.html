@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./bootstrap-5.3.2-dist/css/bootstrap.css">
+
+    <title>Document</title>
+
+    <style>
+        body {
+            background-image: linear-gradient(150deg, #5464b9, #53cfaa);
+        }
+
+        
+        .glass { 
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: none !important;
+        }
+    </style>
+</head>
+
+<body class="text-uppercase text-light">
+    <header class="py-5 text-center">
+        <h1 class="fw-bold">Weather template</h1>
+    </header>
+    
+    <main class="container row m-auto gap-3">
+        <section class="glass col p-4 pb-0 border text-light">
+            <header class="card-title text-center border-bottom pb-2">
+                <h4 class="h5 fw-semibold">local wather report</h4>
+            </header>
+
+            <section class="row p-4 pb-0">
+                <img id="currentDayImage" src="./images/sun.png" alt="Sun" class=" col-3 w-50">
+                <section class="card-body col-3 text-center row flex-column justify-content-center align-items-center">
+                    <h2 id="currentDay" class="card-text fw-semibold h1">sunday</h2>
+                    <p class="card-text fw-semibold h5">sunday</p>
+                </section>
+            </section>
+
+            <section class="row pe-1 ps-3">
+                <div class="col-6 row flex-column justify-content-center align-items-center text-center">
+                    <p class="h5 fw-semibold">14 KM/H SW</p>
+                </div>
+                <section class="card-body fw-semibold h3 col-6 text-center">
+                    <p class="currentDayTemperture">22ْ c</p>
+                    <p class="currentDayTemperture">71.6ْ f</p>
+                </section>
+            </section>
+        </section>
+
+        <section class="glass col p-4 border text-light">
+            <header class="card-title text-center border-bottom pb-2">
+                <h4 class="h5 fw-semibold">sea forecast report</h4>
+            </header>
+        </section>
+
+        <section id="daysWeathierContainer" class="glass col-12 row my-5 px-3 py-5"></section>
+    </main>
+
+    <script src="./bootstrap-5.3.2-dist/js/bootstrap.bundle.js"></script>
+
+    <script>
+        const weathers = ["sun", 'SunCloud', 'Cloud', 'rain', 'RainThunder', 'Snow'];
+
+        const data = [
+            {
+                id: 0,
+                day: 'sunday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 1,
+                day: 'monday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 2,
+                day: 'tuesday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 3,
+                day: 'wednesday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 4,
+                day: 'thursday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 5,
+                day: 'friday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            },
+            {
+                id: 6,
+                day: 'satrday',
+                weather: weathers[Math.floor(Math.random() * weathers.length)],
+                temperatureC: 22,
+                temperatureF: 71.6
+            }
+        ]
+
+        const daysWeathierContainer = document.getElementById('daysWeathierContainer');
+
+        const currentDay = document.getElementById('currentDay');
+        const currentDayP = document.querySelector('#currentDay + p');
+        const currentDayImage = document.getElementById('currentDayImage');
+        const currentDayTemperture = document.getElementsByClassName('currentDayTemperture');
+
+        data.filter(e => e.id === new Date().getDay()).forEach(e => {
+            currentDay.innerText = e.day;
+            currentDayP.innerText = e.day;
+            currentDayImage.src = `./images/${e.weather}.png`;
+            currentDayTemperture[0].innerText = `${e.temperatureC}ْ C`;
+            currentDayTemperture[1].innerText = `${e.temperatureF}ْ F`;
+        });
+
+        const days = [...data.slice(new Date().getDay() + 1), ...data.slice(0, new Date().getDay())];
+
+        for (let i = 0; i < days.length - 1; i++) {
+            daysWeathierContainer.innerHTML += `
+                <article class="col text-center ${i < days.length - 2 ? 'border-end border-2' : ''}">
+                    <header>
+                        <h4 class="fw-semibold">${days[i].day}</h4>
+                    </header>
+
+                    <img src="./images/${days[i].weather}.png" alt="${days[i].weather}" class="my-4">
+
+                    <section class="card-body fw-semibold h4">
+                        <p class="card-text">${days[i].temperatureC}ْ C</p>
+                        <p class="card-text">${days[i].temperatureF}ْ f</p>
+                    </section>
+                </article>
+            `
+        }
+        console.log()
+    </script>
+</body>
+
+</html>
